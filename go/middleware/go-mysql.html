@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Go语言操作Mysql | 六松岛-福小林</title>
+    <meta name="description" content="千里之行,始于足下">
+    <meta name="generator" content="VuePress 1.3.1">
+    <link rel="icon" href="/img/favicon.ico">
+  <script charset="utf-8" src="/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+  <meta name="keywords" content="福小林,奔奔,ourLang,CentOS,JAVA,vue组件,lsdCloud">
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-146891701-1"></script>
+  <script>window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-146891701-1');</script>
+  <script>var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?56eae8eec590ccaef1d5ff99d766f315";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
+    
+    <link rel="preload" href="/assets/css/0.styles.360a9128.css" as="style"><link rel="preload" href="/assets/js/app.30b04212.js" as="script"><link rel="preload" href="/assets/js/2.73c04003.js" as="script"><link rel="preload" href="/assets/js/90.da446e2b.js" as="script"><link rel="prefetch" href="/assets/js/10.0dfb4509.js"><link rel="prefetch" href="/assets/js/100.7179544d.js"><link rel="prefetch" href="/assets/js/101.484a289f.js"><link rel="prefetch" href="/assets/js/102.b9bdf6b9.js"><link rel="prefetch" href="/assets/js/103.982418d8.js"><link rel="prefetch" href="/assets/js/104.ae28deb8.js"><link rel="prefetch" href="/assets/js/105.1c8bf05a.js"><link rel="prefetch" href="/assets/js/106.08ce02d5.js"><link rel="prefetch" href="/assets/js/107.9814e03b.js"><link rel="prefetch" href="/assets/js/108.3ca04917.js"><link rel="prefetch" href="/assets/js/109.0fcf0488.js"><link rel="prefetch" href="/assets/js/11.2f72992a.js"><link rel="prefetch" href="/assets/js/110.2bb5d3e8.js"><link rel="prefetch" href="/assets/js/111.9ceb925b.js"><link rel="prefetch" href="/assets/js/112.ba3e6ce4.js"><link rel="prefetch" href="/assets/js/113.ace0f2e7.js"><link rel="prefetch" href="/assets/js/114.456ccd74.js"><link rel="prefetch" href="/assets/js/115.e1bff5b3.js"><link rel="prefetch" href="/assets/js/116.11b7ae26.js"><link rel="prefetch" href="/assets/js/117.4dd94f49.js"><link rel="prefetch" href="/assets/js/118.8b9ae7e3.js"><link rel="prefetch" href="/assets/js/119.21f0196b.js"><link rel="prefetch" href="/assets/js/12.925da151.js"><link rel="prefetch" href="/assets/js/120.0471dc55.js"><link rel="prefetch" href="/assets/js/121.9ed449e1.js"><link rel="prefetch" href="/assets/js/122.94111fe7.js"><link rel="prefetch" href="/assets/js/13.e8f105ea.js"><link rel="prefetch" href="/assets/js/14.a0212ea5.js"><link rel="prefetch" href="/assets/js/15.82a55e1a.js"><link rel="prefetch" href="/assets/js/16.91f3ace7.js"><link rel="prefetch" href="/assets/js/17.d0bbf17a.js"><link rel="prefetch" href="/assets/js/18.014612b1.js"><link rel="prefetch" href="/assets/js/19.e7bc7b37.js"><link rel="prefetch" href="/assets/js/20.0fb97316.js"><link rel="prefetch" href="/assets/js/21.bb632c3b.js"><link rel="prefetch" href="/assets/js/22.13a69f68.js"><link rel="prefetch" href="/assets/js/23.f77a5633.js"><link rel="prefetch" href="/assets/js/24.d776c9e7.js"><link rel="prefetch" href="/assets/js/25.2f331b69.js"><link rel="prefetch" href="/assets/js/26.b145c5e7.js"><link rel="prefetch" href="/assets/js/27.96ab8d3a.js"><link rel="prefetch" href="/assets/js/28.3b3abdb7.js"><link rel="prefetch" href="/assets/js/29.0fa596f8.js"><link rel="prefetch" href="/assets/js/3.83321553.js"><link rel="prefetch" href="/assets/js/30.4a7395cc.js"><link rel="prefetch" href="/assets/js/31.f19377c3.js"><link rel="prefetch" href="/assets/js/32.b2ea1cff.js"><link rel="prefetch" href="/assets/js/33.a7bc1353.js"><link rel="prefetch" href="/assets/js/34.9f4f5514.js"><link rel="prefetch" href="/assets/js/35.b2720dee.js"><link rel="prefetch" href="/assets/js/36.e14d46e4.js"><link rel="prefetch" href="/assets/js/37.3666a3e2.js"><link rel="prefetch" href="/assets/js/38.75e07b8a.js"><link rel="prefetch" href="/assets/js/39.aa2ae7fe.js"><link rel="prefetch" href="/assets/js/4.5597ce85.js"><link rel="prefetch" href="/assets/js/40.97f6459a.js"><link rel="prefetch" href="/assets/js/41.445e3e26.js"><link rel="prefetch" href="/assets/js/42.ffc9e50a.js"><link rel="prefetch" href="/assets/js/43.ace41f42.js"><link rel="prefetch" href="/assets/js/44.62ba4555.js"><link rel="prefetch" href="/assets/js/45.08f900aa.js"><link rel="prefetch" href="/assets/js/46.47259265.js"><link rel="prefetch" href="/assets/js/47.547e0f92.js"><link rel="prefetch" href="/assets/js/48.21f6693f.js"><link rel="prefetch" href="/assets/js/49.db881f96.js"><link rel="prefetch" href="/assets/js/5.32657e0f.js"><link rel="prefetch" href="/assets/js/50.93cd82ae.js"><link rel="prefetch" href="/assets/js/51.01c10013.js"><link rel="prefetch" href="/assets/js/52.91004033.js"><link rel="prefetch" href="/assets/js/53.7dffaac8.js"><link rel="prefetch" href="/assets/js/54.5d906e8e.js"><link rel="prefetch" href="/assets/js/55.f3329c5d.js"><link rel="prefetch" href="/assets/js/56.3dcaea6d.js"><link rel="prefetch" href="/assets/js/57.208ce894.js"><link rel="prefetch" href="/assets/js/58.7808b00a.js"><link rel="prefetch" href="/assets/js/59.dac99d0e.js"><link rel="prefetch" href="/assets/js/6.0bb4d748.js"><link rel="prefetch" href="/assets/js/60.5d045646.js"><link rel="prefetch" href="/assets/js/61.91ab9048.js"><link rel="prefetch" href="/assets/js/62.3b3ff673.js"><link rel="prefetch" href="/assets/js/63.e5a9ee6b.js"><link rel="prefetch" href="/assets/js/64.f27372fc.js"><link rel="prefetch" href="/assets/js/65.2bb59a36.js"><link rel="prefetch" href="/assets/js/66.a2263c6e.js"><link rel="prefetch" href="/assets/js/67.d22f8dbe.js"><link rel="prefetch" href="/assets/js/68.f6520f7c.js"><link rel="prefetch" href="/assets/js/69.42dad5a3.js"><link rel="prefetch" href="/assets/js/7.758d484d.js"><link rel="prefetch" href="/assets/js/70.5b62a0e5.js"><link rel="prefetch" href="/assets/js/71.ca15fdc7.js"><link rel="prefetch" href="/assets/js/72.6e8d4da1.js"><link rel="prefetch" href="/assets/js/73.f547befa.js"><link rel="prefetch" href="/assets/js/74.cf5fc42b.js"><link rel="prefetch" href="/assets/js/75.23ea867d.js"><link rel="prefetch" href="/assets/js/76.2b92575b.js"><link rel="prefetch" href="/assets/js/77.a327d476.js"><link rel="prefetch" href="/assets/js/78.feeef9ff.js"><link rel="prefetch" href="/assets/js/79.7a8c61ed.js"><link rel="prefetch" href="/assets/js/8.4bdd1bf6.js"><link rel="prefetch" href="/assets/js/80.7923be5e.js"><link rel="prefetch" href="/assets/js/81.201b67ef.js"><link rel="prefetch" href="/assets/js/82.00c5f674.js"><link rel="prefetch" href="/assets/js/83.56277cf4.js"><link rel="prefetch" href="/assets/js/84.d615ad8d.js"><link rel="prefetch" href="/assets/js/85.27a76c36.js"><link rel="prefetch" href="/assets/js/86.ec8d7ac8.js"><link rel="prefetch" href="/assets/js/87.ce1914d9.js"><link rel="prefetch" href="/assets/js/88.e20288e6.js"><link rel="prefetch" href="/assets/js/89.68963d20.js"><link rel="prefetch" href="/assets/js/9.64b1f220.js"><link rel="prefetch" href="/assets/js/91.e9e4ed17.js"><link rel="prefetch" href="/assets/js/92.01745571.js"><link rel="prefetch" href="/assets/js/93.189ab23d.js"><link rel="prefetch" href="/assets/js/94.2a49cad2.js"><link rel="prefetch" href="/assets/js/95.8c004376.js"><link rel="prefetch" href="/assets/js/96.a5489597.js"><link rel="prefetch" href="/assets/js/97.90844480.js"><link rel="prefetch" href="/assets/js/98.d3a90abe.js"><link rel="prefetch" href="/assets/js/99.9286b79b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.360a9128.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">六松岛-福小林</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/study-guide/introduction.html" class="nav-link">
+  学习指南
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术分类" class="dropdown-title"><span class="title">技术分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/introduction.html" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/go/introduction.html" class="nav-link">
+  Go
+</a></li><li class="dropdown-item"><!----> <a href="/sql/introduction.html" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/fhir/introduction.html" class="nav-link">
+  FHIR
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/introduction.html" class="nav-link">
+  个人博客
+</a></div><div class="nav-item"><a href="/tool/developmentBox.html" class="nav-link">
+  开发百宝箱
+</a></div><div class="nav-item"><a href="/project/introduction.html" class="nav-link">
+  项目分享
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="了解更多" class="dropdown-title"><span class="title">了解更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=180331730&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  其他合作
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.lsdcloud.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/qq_37493556" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="/linkExchanges/introduction.html" class="nav-link">
+  友情链接
+</a></div> <a href="https://github.com/sczj/goblog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/study-guide/introduction.html" class="nav-link">
+  学习指南
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术分类" class="dropdown-title"><span class="title">技术分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/introduction.html" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/go/introduction.html" class="nav-link">
+  Go
+</a></li><li class="dropdown-item"><!----> <a href="/sql/introduction.html" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/fhir/introduction.html" class="nav-link">
+  FHIR
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/introduction.html" class="nav-link">
+  个人博客
+</a></div><div class="nav-item"><a href="/tool/developmentBox.html" class="nav-link">
+  开发百宝箱
+</a></div><div class="nav-item"><a href="/project/introduction.html" class="nav-link">
+  项目分享
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="了解更多" class="dropdown-title"><span class="title">了解更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=180331730&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  其他合作
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.lsdcloud.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/qq_37493556" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="/linkExchanges/introduction.html" class="nav-link">
+  友情链接
+</a></div> <a href="https://github.com/sczj/goblog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/go/introduction.html" class="sidebar-link">Go语言</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Go教程</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Go Web框架</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Go工具中间件</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/go/middleware/go-coding-standard.html" class="sidebar-link">Golang语言编码规范</a></li><li><a href="/go/middleware/go-get命令详解.html" class="sidebar-link">go get命令详解</a></li><li><a href="/go/middleware/go-mysql.html" class="active sidebar-link">Go语言操作Mysql</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_1-连接mysql" class="sidebar-link">1 连接MySQL</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_1-1-下载依赖" class="sidebar-link">1.1 下载依赖</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_1-2-使用mysql驱动" class="sidebar-link">1.2 使用MySQL驱动</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_1-3-示例代码" class="sidebar-link">1.3 示例代码</a></li></ul></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_2-初始化连接" class="sidebar-link">2 初始化连接</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_2-1-db（数据库对象）" class="sidebar-link">2.1 DB（数据库对象）</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_2-2-db连接池" class="sidebar-link">2.2 DB连接池</a></li></ul></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_3-数据库crud" class="sidebar-link">3 数据库CRUD</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_3-1-建库建表语句" class="sidebar-link">3.1 建库建表语句</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_3-2-db-exec方法说明" class="sidebar-link">3.2 DB.Exec方法说明</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_3-3-插入数据" class="sidebar-link">3.3 插入数据</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_3-4-更新数据" class="sidebar-link">3.4 更新数据</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_3-5-删除数据" class="sidebar-link">3.5 删除数据</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_3-6-查询数据" class="sidebar-link">3.6 查询数据</a></li></ul></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_4-mysql预处理" class="sidebar-link">4 MySQL预处理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_4-1-什么是预处理？" class="sidebar-link">4.1 什么是预处理？</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_4-2-为什么要预处理？" class="sidebar-link">4.2 为什么要预处理？</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_4-3-mysql预处理" class="sidebar-link">4.3 MySQL预处理</a></li></ul></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_5-mysql事务" class="sidebar-link">5 MySQL事务</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_5-1-什么是事务？" class="sidebar-link">5.1 什么是事务？</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_5-2-事务的acid" class="sidebar-link">5.2 事务的ACID</a></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_5-3-事务相关方法" class="sidebar-link">5.3 事务相关方法</a></li></ul></li><li class="sidebar-sub-header"><a href="/go/middleware/go-mysql.html#_6-orm框架学习" class="sidebar-link">6 ORM框架学习</a></li></ul></li><li><a href="/go/middleware/go-redis.html" class="sidebar-link">go-redis文档</a></li><li><a href="/go/middleware/go-swagger.html" class="sidebar-link">go-swagger安装及使用</a></li><li><a href="/go/middleware/go-viper.html" class="sidebar-link">viper操作文档</a></li><li><a href="/go/middleware/Goland的自定义快捷键配置.html" class="sidebar-link">配置Goland的自定义快捷键</a></li><li><a href="/go/middleware/Golang的安装配置golint.html" class="sidebar-link">Golang的安装配置golint</a></li><li><a href="/go/middleware/goproxy.html" class="sidebar-link">GoLand配置GOPROXY代理</a></li><li><a href="/go/middleware/gorm.html" class="sidebar-link">GORM基本操作</a></li><li><a href="/go/middleware/json-iterator.html" class="sidebar-link">json-iterator使用</a></li><li><a href="/go/middleware/package.html" class="sidebar-link">Go语言包和包管理</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="go语言操作mysql"><a href="#go语言操作mysql" class="header-anchor">#</a> Go语言操作Mysql</h1> <p><a data-fancybox="" title="Go语言操作Mysql" href="/img/goImage/gomysql.png"><img src="/img/goImage/gomysql.png" alt="Go语言操作Mysql"></a></p> <div class="custom-block tip"><p class="custom-block-title">说明</p> <p>Go语言中的<code>database/sql</code>不包含数据库驱动，<code>database/sql</code>提供了保证SQL或类SQL数据库的泛用接口。使用sql包时必须注入（至少）一个数据库驱动。
+参见<a href="http://golang.org/s/sqldrivers" target="_blank" rel="noopener noreferrer">http://golang.org/s/sqldrivers<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> 获取驱动列表。
+更多用法示例，参见wiki页面：<a href="http://golang.org/s/sqlwiki" target="_blank" rel="noopener noreferrer">http://golang.org/s/sqlwiki<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p></div> <h2 id="_1-连接mysql"><a href="#_1-连接mysql" class="header-anchor">#</a> 1 连接MySQL</h2> <p>通过GO页面作为客户端访问数据库</p> <ul><li>1.因为GO语言没有提供任何官方数据库驱动，所以需要安装第三方函数库。</li> <li>2.由于在github上安装，所以需要安装git软件，<a href="https://www.jianshu.com/p/bebba0d8038e" target="_blank" rel="noopener noreferrer">安装git教程<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul> <h3 id="_1-1-下载依赖"><a href="#_1-1-下载依赖" class="header-anchor">#</a> 1.1 下载依赖</h3> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">go</span> get <span class="token operator">-</span>u github<span class="token punctuation">.</span>com<span class="token operator">/</span><span class="token keyword">go</span><span class="token operator">-</span>sql<span class="token operator">-</span>driver<span class="token operator">/</span>mysql
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_1-2-使用mysql驱动"><a href="#_1-2-使用mysql驱动" class="header-anchor">#</a> 1.2 使用MySQL驱动</h3> <p>Open打开一个<code>driverName</code>指定的数据库驱动，<code>dataSourceName</code>指定数据源具有一定的格式连接信息字符串。</p> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">func</span> <span class="token function">Open</span><span class="token punctuation">(</span>driverName<span class="token punctuation">,</span> dataSourceName <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>DB<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_1-3-示例代码"><a href="#_1-3-示例代码" class="header-anchor">#</a> 1.3 示例代码</h3> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+<span class="token comment">//执行driver.go文件中的init(),向&quot;database/sql&quot;注册一个mysql的驱动</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span> 
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> <span class="token string">&quot;root:admin@tcp(127.0.0.1:3306)/go_test?charset=utf8&quot;</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">:=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;打开数据库失败,err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试连接数据库，Ping方法可检查数据源名称是否合法,账号密码是否正确。</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库失败,err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><h2 id="_2-初始化连接"><a href="#_2-初始化连接" class="header-anchor">#</a> 2 初始化连接</h2> <h3 id="_2-1-db（数据库对象）"><a href="#_2-1-db（数据库对象）" class="header-anchor">#</a> 2.1 DB（数据库对象）</h3> <blockquote><p>sql.DB类型代表了数据库,其它语言操作数据库的时候,需要创建一个连接,对于Go而言则是需要创建一个数据库类型,
+它不是数据库连接,Go中的连接来自内部实现的连接池,连接的建立是惰性的,连接将会在操作的时候,由连接池创建并维护。</p></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token comment">//使用 sql.Open函数创建数据库类型，第一个是数据库驱动名，第二个是连接信息的字符串</span>
+<span class="token keyword">var</span> Db <span class="token operator">*</span>sqlx<span class="token punctuation">.</span>DB
+db<span class="token punctuation">,</span> err <span class="token operator">:=</span> sqlx<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;username:password@tcp(ip:port)/database?charset=utf8&quot;</span><span class="token punctuation">)</span>
+Db <span class="token operator">=</span> db
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="_2-2-db连接池"><a href="#_2-2-db连接池" class="header-anchor">#</a> 2.2 DB连接池</h3> <blockquote><p>Open函数可能只是验证其参数，而不创建与数据库的连接。如果要检查数据源的名称是否合法，应调用返回值的Ping方法。
+返回的DB可以安全的被多个<code>goroutine</code>同时使用，并会维护自身的闲置连接池。这样一来,Open函数只需调用一次。很少需要关闭DB。</p></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	 db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br></div></div><h2 id="_3-数据库crud"><a href="#_3-数据库crud" class="header-anchor">#</a> 3 数据库CRUD</h2> <h3 id="_3-1-建库建表语句"><a href="#_3-1-建库建表语句" class="header-anchor">#</a> 3.1 建库建表语句</h3> <div class="language-sql line-numbers-mode"><pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> go_test<span class="token punctuation">;</span>
+<span class="token keyword">use</span> go_test<span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span><span class="token keyword">user</span><span class="token punctuation">`</span> <span class="token punctuation">(</span>
+    <span class="token punctuation">`</span>id<span class="token punctuation">`</span> <span class="token keyword">BIGINT</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>name<span class="token punctuation">`</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">''</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>age<span class="token punctuation">`</span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span><span class="token punctuation">`</span>id<span class="token punctuation">`</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="_3-2-db-exec方法说明"><a href="#_3-2-db-exec方法说明" class="header-anchor">#</a> 3.2 DB.Exec方法说明</h3> <blockquote><p>插入、更新和删除操作都使用<code>Exec()</code>方法。<code>Exec</code>执行一次命令（包括查询、删除、更新、插入等），返回的<code>Result</code>是对已执行的SQL命令的总结。参数args表示query中的占位参数。</p> <ul><li>插入数据后可以通过 LastInsertId() 方法获取插入数据的主键 id</li> <li>通过 RowsAffected 可以获取受影响的行数</li> <li>通过 Exec() 方法插入数据，返回的结果是 sql.Result 类型</li></ul></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">func</span> <span class="token punctuation">(</span>db <span class="token operator">*</span>DB<span class="token punctuation">)</span> <span class="token function">Exec</span><span class="token punctuation">(</span>query <span class="token builtin">string</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Result<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>需要注意的是,不同的数据库,使用的占位符不同,<code>mysql</code>采用<code>?</code>作为占位符,其余数据库占位符说明如下：</p> <table><thead><tr><th style="text-align:center;">数据库</th> <th>占位符语法</th></tr></thead> <tbody><tr><td style="text-align:center;">MySQL</td> <td>?</td></tr> <tr><td style="text-align:center;">PostgreSQL</td> <td>$1, $2等</td></tr> <tr><td style="text-align:center;">SQLite</td> <td>? 和$1</td></tr> <tr><td style="text-align:center;">Oracle</td> <td>:name</td></tr></tbody></table> <h3 id="_3-3-插入数据"><a href="#_3-3-插入数据" class="header-anchor">#</a> 3.3 插入数据</h3> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	 db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//新建一个user的结构体变量</span>
+	newUser <span class="token operator">:=</span> user<span class="token punctuation">{</span>
+		name<span class="token punctuation">:</span> <span class="token string">&quot;赵六&quot;</span><span class="token punctuation">,</span>
+		age<span class="token punctuation">:</span>  <span class="token number">98</span><span class="token punctuation">}</span>
+	<span class="token function">insertRow</span><span class="token punctuation">(</span>newUser<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//向数据表中插入数据</span>
+<span class="token comment">// 参数说明newUser   ----user结构体</span>
+<span class="token keyword">func</span> <span class="token function">insertRow</span><span class="token punctuation">(</span>newUser user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token comment">//需要插入的sql语句，？表示占位参数</span>
+	sqlStr <span class="token operator">:=</span> <span class="token string">&quot;insert into user(name,age) values(?,?)&quot;</span>
+	<span class="token comment">//把user结构体的name、age字段依次传给sqlStr的占位参数</span>
+	ret<span class="token punctuation">,</span> err <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>sqlStr<span class="token punctuation">,</span> newUser<span class="token punctuation">.</span>name<span class="token punctuation">,</span> newUser<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//执行sql语句报错</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;插入失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	newID<span class="token punctuation">,</span> err <span class="token operator">:=</span> ret<span class="token punctuation">.</span><span class="token function">LastInsertId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//新插入数据的ID，默认为主键</span>
+	<span class="token comment">//rowsNumber, err:= ret.RowsAffected() //受影响的行数</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;获取id失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;插入成功，id为：&quot;</span><span class="token punctuation">,</span> newID<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br></div></div><h3 id="_3-4-更新数据"><a href="#_3-4-更新数据" class="header-anchor">#</a> 3.4 更新数据</h3> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	 db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//需要修改的数据库对应记录的user结构体</span>
+	updateUser <span class="token operator">:=</span> user<span class="token punctuation">{</span>
+		id<span class="token punctuation">:</span>   <span class="token number">7</span><span class="token punctuation">,</span>
+		name<span class="token punctuation">:</span> <span class="token string">&quot;蜡笔小新&quot;</span><span class="token punctuation">,</span>
+		age<span class="token punctuation">:</span>  <span class="token number">98</span><span class="token punctuation">}</span>
+	<span class="token function">updateRow</span><span class="token punctuation">(</span>updateUser<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 更新数据</span>
+<span class="token comment">// updateUser   ----需要更新的user结构体</span>
+<span class="token keyword">func</span> <span class="token function">updateRow</span><span class="token punctuation">(</span>updateUser user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	sqlStr <span class="token operator">:=</span> <span class="token string">&quot;update user set age=?,name=? where id = ?&quot;</span>
+	ret<span class="token punctuation">,</span> err <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>sqlStr<span class="token punctuation">,</span> updateUser<span class="token punctuation">.</span>age<span class="token punctuation">,</span> updateUser<span class="token punctuation">.</span>name<span class="token punctuation">,</span> updateUser<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;更新失败,err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	n<span class="token punctuation">,</span> err <span class="token operator">:=</span> ret<span class="token punctuation">.</span><span class="token function">RowsAffected</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 操作影响的行数</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;获取影响行数失败,err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;更新成功，影响行数为:%d\n&quot;</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br></div></div><h3 id="_3-5-删除数据"><a href="#_3-5-删除数据" class="header-anchor">#</a> 3.5 删除数据</h3> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	 db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//需要修改的数据库对应记录的user结构体，id不能为空</span>
+	deleteUser <span class="token operator">:=</span> user<span class="token punctuation">{</span>
+		id<span class="token punctuation">:</span>   <span class="token number">6</span><span class="token punctuation">,</span>
+		name<span class="token punctuation">:</span> <span class="token string">&quot;蜡笔小新&quot;</span><span class="token punctuation">,</span>
+		age<span class="token punctuation">:</span>  <span class="token number">98</span><span class="token punctuation">}</span>
+	<span class="token function">deleteRow</span><span class="token punctuation">(</span>deleteUser<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 删除数据</span>
+<span class="token comment">// deleteUser   ----需要删除的user结构体，删除的条件还可以是 age name等等</span>
+<span class="token keyword">func</span> <span class="token function">deleteRow</span><span class="token punctuation">(</span>deleteUser user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	sqlStr <span class="token operator">:=</span> <span class="token string">&quot;DELETE FROM user WHERE 1=1 AND  id = ?&quot;</span>
+	ret<span class="token punctuation">,</span> err <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>sqlStr<span class="token punctuation">,</span> deleteUser<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;删除数据失败,err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	n<span class="token punctuation">,</span> err <span class="token operator">:=</span> ret<span class="token punctuation">.</span><span class="token function">RowsAffected</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 操作影响的行数</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;获取影响行数失败,err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;删除数据成功，影响行数为:%d\n&quot;</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br></div></div><h3 id="_3-6-查询数据"><a href="#_3-6-查询数据" class="header-anchor">#</a> 3.6 查询数据</h3> <h4 id="_3-6-1-单行查询"><a href="#_3-6-1-单行查询" class="header-anchor">#</a> 3.6.1 单行查询</h4> <blockquote><p>单行查询db.QueryRow()执行一次查询，并期望返回最多一行结果（即Row)。语法如下:</p></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">func</span> <span class="token punctuation">(</span>db <span class="token operator">*</span>DB<span class="token punctuation">)</span> <span class="token function">QueryRow</span><span class="token punctuation">(</span>query <span class="token builtin">string</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">*</span>Row
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	 db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//需要修改的数据库对应记录的user结构体，id不能为空</span>
+	queryUser <span class="token operator">:=</span> user<span class="token punctuation">{</span>
+		id<span class="token punctuation">:</span>   <span class="token number">3</span><span class="token punctuation">}</span>
+	<span class="token function">QueryRow</span><span class="token punctuation">(</span>queryUser<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//查询数据</span>
+<span class="token keyword">func</span> <span class="token function">QueryRow</span><span class="token punctuation">(</span>queryUser user<span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+	sqlStr <span class="token operator">:=</span> <span class="token string">&quot;SELECT id,name,age from user WHERE 1=1 AND  id = ?&quot;</span>
+	row <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">QueryRow</span><span class="token punctuation">(</span>sqlStr<span class="token punctuation">,</span> queryUser<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+	<span class="token keyword">var</span> u user
+	<span class="token comment">//然后使用Scan()方法给对应类型变量赋值，以便取出结果,注意传入的是指针</span>
+	err<span class="token operator">:=</span>row<span class="token punctuation">.</span><span class="token function">Scan</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>u<span class="token punctuation">.</span>id<span class="token punctuation">,</span> <span class="token operator">&amp;</span>u<span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token operator">&amp;</span>u<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;获取数据错误, err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;查询数据成功%#v&quot;</span><span class="token punctuation">,</span>u<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br></div></div><h4 id="_3-6-2-多行查询"><a href="#_3-6-2-多行查询" class="header-anchor">#</a> 3.6.2 多行查询</h4> <blockquote><p>多行查询db.Query()执行一次查询，返回多行结果（即sql.Rows类型的结果集）,
+迭代后者使用<code>Next()</code>方法，然后使用<code>Scan()</code>方法给对应类型变量赋值,以便取出结果,最后再把结果集关闭（释放连接）语法如下：</p></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">func</span> <span class="token punctuation">(</span>db <span class="token operator">*</span>DB<span class="token punctuation">)</span> <span class="token function">Query</span><span class="token punctuation">(</span>query <span class="token builtin">string</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>Rows<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token function">queryRows</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//多行查询</span>
+<span class="token keyword">func</span> <span class="token function">queryRows</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+	sqlStr <span class="token operator">:=</span> <span class="token string">&quot;select id,name,age from user where id&gt;?&quot;</span>
+	rows<span class="token punctuation">,</span>err <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">Query</span><span class="token punctuation">(</span>sqlStr<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;查询失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">defer</span> rows<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">//关闭连接</span>
+	<span class="token comment">//循环读取数据</span>
+	<span class="token keyword">for</span> rows<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">var</span> u user
+		err <span class="token operator">:=</span> rows<span class="token punctuation">.</span><span class="token function">Scan</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>u<span class="token punctuation">.</span>id<span class="token punctuation">,</span><span class="token operator">&amp;</span>u<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token operator">&amp;</span>u<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+			fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;scan失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+			<span class="token keyword">return</span>
+		<span class="token punctuation">}</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;id:%d	name:%s		age:%d\n&quot;</span><span class="token punctuation">,</span> u<span class="token punctuation">.</span>id<span class="token punctuation">,</span> u<span class="token punctuation">.</span>name<span class="token punctuation">,</span> u<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br></div></div><h2 id="_4-mysql预处理"><a href="#_4-mysql预处理" class="header-anchor">#</a> 4 MySQL预处理</h2> <h3 id="_4-1-什么是预处理？"><a href="#_4-1-什么是预处理？" class="header-anchor">#</a> 4.1 什么是预处理？</h3> <div class="custom-block tip"><p class="custom-block-title">普通SQL语句执行过程</p> <ul><li>1、客户端对SQL语句进行占位符替换得到完整的SQL语句。</li> <li>2、客户端发送完整SQL语句到MySQL服务端</li> <li>3、MySQL服务端执行完整的SQL语句并将结果返回给客户端。</li></ul></div> <div class="custom-block tip"><p class="custom-block-title">预处理执行过程：</p> <ul><li>1、把SQL语句分成两部分，命令部分与数据部分。</li> <li>2、先把命令部分发送给MySQL服务端，MySQL服务端进行SQL预处理。</li> <li>3、然后把数据部分发送给MySQL服务端，MySQL服务端对SQL语句进行占位符替换。</li> <li>4、MySQL服务端执行完整的SQL语句并将结果返回给客户端。</li></ul></div> <h3 id="_4-2-为什么要预处理？"><a href="#_4-2-为什么要预处理？" class="header-anchor">#</a> 4.2 为什么要预处理？</h3> <ul><li>优化MySQL服务器重复执行SQL的方法，可以提升服务器性能，提前让服务器编译，一次编译多次执行，节省后续编译的成本。</li> <li>避免SQL注入问题。</li></ul> <h3 id="_4-3-mysql预处理"><a href="#_4-3-mysql预处理" class="header-anchor">#</a> 4.3 MySQL预处理</h3> <blockquote><p><code>Prepare</code>方法会先将sql语句发送给<code>MySQL</code>服务端，返回一个准备好的状态用于之后的查询和命令。返回值可以同时执行多个查询和命令。</p></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">func</span> <span class="token punctuation">(</span>db <span class="token operator">*</span>DB<span class="token punctuation">)</span> <span class="token function">Prepare</span><span class="token punctuation">(</span>query <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>Stmt<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_4-3-1-查询预处理"><a href="#_4-3-1-查询预处理" class="header-anchor">#</a> 4.3.1 查询预处理</h4> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token function">prepareQueryRow</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//查询预处理</span>
+<span class="token keyword">func</span> <span class="token function">prepareQueryRow</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+	sqlStr <span class="token operator">:=</span> <span class="token string">&quot;select id,name,age from user where id &gt; ?&quot;</span>
+	stmt<span class="token punctuation">,</span>err <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">Prepare</span><span class="token punctuation">(</span>sqlStr<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;预处理失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">defer</span> stmt<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	rows<span class="token punctuation">,</span>err <span class="token operator">:=</span> stmt<span class="token punctuation">.</span><span class="token function">Query</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;查询失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">defer</span> rows<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token comment">//循环读取</span>
+	<span class="token keyword">for</span> rows<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">var</span> u user
+		err <span class="token operator">:=</span> rows<span class="token punctuation">.</span><span class="token function">Scan</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>u<span class="token punctuation">.</span>id<span class="token punctuation">,</span><span class="token operator">&amp;</span>u<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token operator">&amp;</span>u<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+			fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;scan失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+			<span class="token keyword">return</span>
+		<span class="token punctuation">}</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;id:%d	 name:%s	 age:%d\n&quot;</span><span class="token punctuation">,</span> u<span class="token punctuation">.</span>id<span class="token punctuation">,</span>u<span class="token punctuation">.</span>name<span class="token punctuation">,</span>u<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br></div></div><h4 id="_4-3-2-增删改预处理"><a href="#_4-3-2-增删改预处理" class="header-anchor">#</a> 4.3.2  增删改预处理</h4> <blockquote><p>插入、更新和删除操作的预处理十分类似，这里以插入操作的预处理为例：</p></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token function">prepareInsertDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//批量插入</span>
+<span class="token keyword">func</span> <span class="token function">prepareInsertDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	sqlStr <span class="token operator">:=</span> <span class="token string">&quot;insert into user (name,age) values(?,?)&quot;</span>
+	stmt<span class="token punctuation">,</span> err <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">Prepare</span><span class="token punctuation">(</span>sqlStr<span class="token punctuation">)</span> <span class="token comment">// 把要执行的命令发送给MySQL服务端做预处理</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;预处理失败, err:%v\n&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">defer</span> stmt<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token comment">// 执行重复的插入命令</span>
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">10</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">15</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">{</span>
+		name <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;name%02d&quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+		stmt<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;批量插入成功&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br></div></div><h2 id="_5-mysql事务"><a href="#_5-mysql事务" class="header-anchor">#</a> 5 MySQL事务</h2> <h3 id="_5-1-什么是事务？"><a href="#_5-1-什么是事务？" class="header-anchor">#</a> 5.1 什么是事务？</h3> <blockquote><p>事务：一个最小的不可再分的工作单元；通常一个事务对应一个完整的业务(例如银行账户转账业务，该业务就是一个最小的工作单元)，同时这个完整的业务需要执行多次的<code>DML(insert、update、delete)</code>语句共同联合完成。A转账给B，这里面就需要执行两次update操作。
+在<code>MySQL</code>中只有使用了<code>Innodb</code>数据库引擎的数据库或表才支持事务。事务处理可以用来维护数据库的完整性，保证成批的SQL语句要么全部执行，要么全部不执行。</p></blockquote> <h3 id="_5-2-事务的acid"><a href="#_5-2-事务的acid" class="header-anchor">#</a> 5.2 事务的ACID</h3> <blockquote><p>通常事务必须满足4个条件<code>（ACID）</code>：原子性（<code>Atomicity</code>，或称不可分割性）、一致性（<code>Consistency</code>）、隔离性（<code>Isolation</code>，又称独立性）、持久性（<code>Durability</code>）。</p></blockquote> <table><thead><tr><th style="text-align:center;">条件</th> <th style="text-align:center;">解释</th></tr></thead> <tbody><tr><td style="text-align:center;">原子性</td> <td style="text-align:center;">一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（<code>Rollback</code>）到事务开始前的状态，就像这个事务从来没有执行过一样。</td></tr> <tr><td style="text-align:center;">一致性</td> <td style="text-align:center;">在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</td></tr> <tr><td style="text-align:center;">隔离性</td> <td style="text-align:center;">数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（<code>Read uncommitted</code>）、读提交（<code>read committed</code>）、可重复读（<code>repeatable read</code>）和串行化（<code>Serializable</code>）。</td></tr> <tr><td style="text-align:center;">持久性</td> <td style="text-align:center;">事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</td></tr></tbody></table> <h3 id="_5-3-事务相关方法"><a href="#_5-3-事务相关方法" class="header-anchor">#</a> 5.3 事务相关方法</h3> <blockquote><p>Go语言中使用以下三个方法实现MySQL中的事务操作。</p></blockquote> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token comment">//开始事务</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>db <span class="token operator">*</span>DB<span class="token punctuation">)</span> <span class="token function">Begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>Tx<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+
+<span class="token comment">//提交事务</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>tx <span class="token operator">*</span>Tx<span class="token punctuation">)</span> <span class="token function">Commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">error</span>
+
+<span class="token comment">//回滚事务</span>
+ <span class="token keyword">func</span> <span class="token punctuation">(</span>tx <span class="token operator">*</span>Tx<span class="token punctuation">)</span> <span class="token function">Rollback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">error</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h4 id="_5-4-事务举例"><a href="#_5-4-事务举例" class="header-anchor">#</a> 5.4 事务举例</h4> <div class="language-go line-numbers-mode"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">&quot;database/sql&quot;</span>
+	<span class="token string">&quot;fmt&quot;</span>
+	<span class="token boolean">_</span> <span class="token string">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> <span class="token punctuation">(</span>
+	<span class="token comment">// 定义一个全局对象db</span>
+	db <span class="token operator">*</span>sql<span class="token punctuation">.</span>DB
+	<span class="token comment">//定义数据库连接的相关参数值</span>
+	<span class="token comment">//连接数据库的用户名</span>
+	userName  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;root&quot;</span>
+	<span class="token comment">//连接数据库的密码</span>
+	password  <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;admin&quot;</span>
+	<span class="token comment">//连接数据库的地址</span>
+	ipAddress <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+	<span class="token comment">//连接数据库的端口号</span>
+	port      <span class="token builtin">int</span>    <span class="token operator">=</span> <span class="token number">3306</span>
+	<span class="token comment">//连接数据库的具体数据库名称</span>
+	dbName    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;go_test&quot;</span>
+	<span class="token comment">//连接数据库的编码格式</span>
+	charset   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">&quot;utf8&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dsn <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%s:%s@tcp(%s:%d)/%s?charset=%s&quot;</span><span class="token punctuation">,</span> userName<span class="token punctuation">,</span> password<span class="token punctuation">,</span> ipAddress<span class="token punctuation">,</span> port<span class="token punctuation">,</span> dbName<span class="token punctuation">,</span> charset<span class="token punctuation">)</span>
+	<span class="token comment">//Open打开一个driverName指定的数据库，dataSourceName指定数据源</span>
+	<span class="token comment">//不会校验用户名和密码是否正确，只会对dsn的格式进行检测</span>
+	db<span class="token punctuation">,</span> err <span class="token operator">=</span> sql<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">&quot;mysql&quot;</span><span class="token punctuation">,</span> dsn<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span> <span class="token comment">//dsn格式不正确的时候会报错</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">//尝试与数据库连接，校验dsn是否正确</span>
+	err <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">Ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;校验失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> err
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 设置最大连接数</span>
+	db<span class="token punctuation">.</span><span class="token function">SetMaxOpenConns</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+	<span class="token comment">// 设置最大的空闲连接数</span>
+	<span class="token comment">// db.SetMaxIdleConns(20)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;连接数据库成功！&quot;</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//创建一个和数据库表结构一样的机构体</span>
+<span class="token keyword">type</span> user <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+	age  <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	err <span class="token operator">:=</span> <span class="token function">initDB</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;初始化数据库失败,err&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token function">transDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">func</span> <span class="token function">transDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+	tx<span class="token punctuation">,</span>err <span class="token operator">:=</span> db<span class="token punctuation">.</span><span class="token function">Begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span> tx <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+			tx<span class="token punctuation">.</span><span class="token function">Rollback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 回滚</span>
+		<span class="token punctuation">}</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;事务开启失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	sql1 <span class="token operator">:=</span> <span class="token string">&quot;update user set age=age+? where id=?&quot;</span>
+	<span class="token boolean">_</span><span class="token punctuation">,</span>err <span class="token operator">=</span> tx<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>sql1<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+		tx<span class="token punctuation">.</span><span class="token function">Rollback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;sql1执行失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	sql2 <span class="token operator">:=</span> <span class="token string">&quot;update user set age=age-? where id=?&quot;</span>
+	<span class="token boolean">_</span><span class="token punctuation">,</span>err <span class="token operator">=</span> tx<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>sql2<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+		tx<span class="token punctuation">.</span><span class="token function">Rollback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;sql2执行失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	err <span class="token operator">=</span> tx<span class="token punctuation">.</span><span class="token function">Commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">{</span>
+		tx<span class="token punctuation">.</span><span class="token function">Rollback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;事务提交失败,err&quot;</span><span class="token punctuation">,</span>err<span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;数据更新成功！&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br></div></div><h2 id="_6-orm框架学习"><a href="#_6-orm框架学习" class="header-anchor">#</a> 6 ORM框架学习</h2> <blockquote><p>第三方库gorm能够简化操作，提高开发效率。特别是对结构体的应用</p></blockquote> <p><a href="/go/middleware/gorm.html">开始学习GORM框架</a></p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2020-2-20 22:34:35</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/go/middleware/go-get命令详解.html" class="prev">
+        go get命令详解
+      </a></span> <span class="next"><a href="/go/middleware/go-redis.html">
+        go-redis文档
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.30b04212.js" defer></script><script src="/assets/js/2.73c04003.js" defer></script><script src="/assets/js/90.da446e2b.js" defer></script>
+  </body>
+</html>

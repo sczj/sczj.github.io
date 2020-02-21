@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>FHIR如何入门 | 六松岛-福小林</title>
+    <meta name="description" content="千里之行,始于足下">
+    <meta name="generator" content="VuePress 1.3.1">
+    <link rel="icon" href="/img/favicon.ico">
+  <script charset="utf-8" src="/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+  <meta name="keywords" content="福小林,奔奔,ourLang,CentOS,JAVA,vue组件,lsdCloud">
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-146891701-1"></script>
+  <script>window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-146891701-1');</script>
+  <script>var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?56eae8eec590ccaef1d5ff99d766f315";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
+    
+    <link rel="preload" href="/assets/css/0.styles.360a9128.css" as="style"><link rel="preload" href="/assets/js/app.30b04212.js" as="script"><link rel="preload" href="/assets/js/2.73c04003.js" as="script"><link rel="preload" href="/assets/js/61.91ab9048.js" as="script"><link rel="prefetch" href="/assets/js/10.0dfb4509.js"><link rel="prefetch" href="/assets/js/100.7179544d.js"><link rel="prefetch" href="/assets/js/101.484a289f.js"><link rel="prefetch" href="/assets/js/102.b9bdf6b9.js"><link rel="prefetch" href="/assets/js/103.982418d8.js"><link rel="prefetch" href="/assets/js/104.ae28deb8.js"><link rel="prefetch" href="/assets/js/105.1c8bf05a.js"><link rel="prefetch" href="/assets/js/106.08ce02d5.js"><link rel="prefetch" href="/assets/js/107.9814e03b.js"><link rel="prefetch" href="/assets/js/108.3ca04917.js"><link rel="prefetch" href="/assets/js/109.0fcf0488.js"><link rel="prefetch" href="/assets/js/11.2f72992a.js"><link rel="prefetch" href="/assets/js/110.2bb5d3e8.js"><link rel="prefetch" href="/assets/js/111.9ceb925b.js"><link rel="prefetch" href="/assets/js/112.ba3e6ce4.js"><link rel="prefetch" href="/assets/js/113.ace0f2e7.js"><link rel="prefetch" href="/assets/js/114.456ccd74.js"><link rel="prefetch" href="/assets/js/115.e1bff5b3.js"><link rel="prefetch" href="/assets/js/116.11b7ae26.js"><link rel="prefetch" href="/assets/js/117.4dd94f49.js"><link rel="prefetch" href="/assets/js/118.8b9ae7e3.js"><link rel="prefetch" href="/assets/js/119.21f0196b.js"><link rel="prefetch" href="/assets/js/12.925da151.js"><link rel="prefetch" href="/assets/js/120.0471dc55.js"><link rel="prefetch" href="/assets/js/121.9ed449e1.js"><link rel="prefetch" href="/assets/js/122.94111fe7.js"><link rel="prefetch" href="/assets/js/13.e8f105ea.js"><link rel="prefetch" href="/assets/js/14.a0212ea5.js"><link rel="prefetch" href="/assets/js/15.82a55e1a.js"><link rel="prefetch" href="/assets/js/16.91f3ace7.js"><link rel="prefetch" href="/assets/js/17.d0bbf17a.js"><link rel="prefetch" href="/assets/js/18.014612b1.js"><link rel="prefetch" href="/assets/js/19.e7bc7b37.js"><link rel="prefetch" href="/assets/js/20.0fb97316.js"><link rel="prefetch" href="/assets/js/21.bb632c3b.js"><link rel="prefetch" href="/assets/js/22.13a69f68.js"><link rel="prefetch" href="/assets/js/23.f77a5633.js"><link rel="prefetch" href="/assets/js/24.d776c9e7.js"><link rel="prefetch" href="/assets/js/25.2f331b69.js"><link rel="prefetch" href="/assets/js/26.b145c5e7.js"><link rel="prefetch" href="/assets/js/27.96ab8d3a.js"><link rel="prefetch" href="/assets/js/28.3b3abdb7.js"><link rel="prefetch" href="/assets/js/29.0fa596f8.js"><link rel="prefetch" href="/assets/js/3.83321553.js"><link rel="prefetch" href="/assets/js/30.4a7395cc.js"><link rel="prefetch" href="/assets/js/31.f19377c3.js"><link rel="prefetch" href="/assets/js/32.b2ea1cff.js"><link rel="prefetch" href="/assets/js/33.a7bc1353.js"><link rel="prefetch" href="/assets/js/34.9f4f5514.js"><link rel="prefetch" href="/assets/js/35.b2720dee.js"><link rel="prefetch" href="/assets/js/36.e14d46e4.js"><link rel="prefetch" href="/assets/js/37.3666a3e2.js"><link rel="prefetch" href="/assets/js/38.75e07b8a.js"><link rel="prefetch" href="/assets/js/39.aa2ae7fe.js"><link rel="prefetch" href="/assets/js/4.5597ce85.js"><link rel="prefetch" href="/assets/js/40.97f6459a.js"><link rel="prefetch" href="/assets/js/41.445e3e26.js"><link rel="prefetch" href="/assets/js/42.ffc9e50a.js"><link rel="prefetch" href="/assets/js/43.ace41f42.js"><link rel="prefetch" href="/assets/js/44.62ba4555.js"><link rel="prefetch" href="/assets/js/45.08f900aa.js"><link rel="prefetch" href="/assets/js/46.47259265.js"><link rel="prefetch" href="/assets/js/47.547e0f92.js"><link rel="prefetch" href="/assets/js/48.21f6693f.js"><link rel="prefetch" href="/assets/js/49.db881f96.js"><link rel="prefetch" href="/assets/js/5.32657e0f.js"><link rel="prefetch" href="/assets/js/50.93cd82ae.js"><link rel="prefetch" href="/assets/js/51.01c10013.js"><link rel="prefetch" href="/assets/js/52.91004033.js"><link rel="prefetch" href="/assets/js/53.7dffaac8.js"><link rel="prefetch" href="/assets/js/54.5d906e8e.js"><link rel="prefetch" href="/assets/js/55.f3329c5d.js"><link rel="prefetch" href="/assets/js/56.3dcaea6d.js"><link rel="prefetch" href="/assets/js/57.208ce894.js"><link rel="prefetch" href="/assets/js/58.7808b00a.js"><link rel="prefetch" href="/assets/js/59.dac99d0e.js"><link rel="prefetch" href="/assets/js/6.0bb4d748.js"><link rel="prefetch" href="/assets/js/60.5d045646.js"><link rel="prefetch" href="/assets/js/62.3b3ff673.js"><link rel="prefetch" href="/assets/js/63.e5a9ee6b.js"><link rel="prefetch" href="/assets/js/64.f27372fc.js"><link rel="prefetch" href="/assets/js/65.2bb59a36.js"><link rel="prefetch" href="/assets/js/66.a2263c6e.js"><link rel="prefetch" href="/assets/js/67.d22f8dbe.js"><link rel="prefetch" href="/assets/js/68.f6520f7c.js"><link rel="prefetch" href="/assets/js/69.42dad5a3.js"><link rel="prefetch" href="/assets/js/7.758d484d.js"><link rel="prefetch" href="/assets/js/70.5b62a0e5.js"><link rel="prefetch" href="/assets/js/71.ca15fdc7.js"><link rel="prefetch" href="/assets/js/72.6e8d4da1.js"><link rel="prefetch" href="/assets/js/73.f547befa.js"><link rel="prefetch" href="/assets/js/74.cf5fc42b.js"><link rel="prefetch" href="/assets/js/75.23ea867d.js"><link rel="prefetch" href="/assets/js/76.2b92575b.js"><link rel="prefetch" href="/assets/js/77.a327d476.js"><link rel="prefetch" href="/assets/js/78.feeef9ff.js"><link rel="prefetch" href="/assets/js/79.7a8c61ed.js"><link rel="prefetch" href="/assets/js/8.4bdd1bf6.js"><link rel="prefetch" href="/assets/js/80.7923be5e.js"><link rel="prefetch" href="/assets/js/81.201b67ef.js"><link rel="prefetch" href="/assets/js/82.00c5f674.js"><link rel="prefetch" href="/assets/js/83.56277cf4.js"><link rel="prefetch" href="/assets/js/84.d615ad8d.js"><link rel="prefetch" href="/assets/js/85.27a76c36.js"><link rel="prefetch" href="/assets/js/86.ec8d7ac8.js"><link rel="prefetch" href="/assets/js/87.ce1914d9.js"><link rel="prefetch" href="/assets/js/88.e20288e6.js"><link rel="prefetch" href="/assets/js/89.68963d20.js"><link rel="prefetch" href="/assets/js/9.64b1f220.js"><link rel="prefetch" href="/assets/js/90.da446e2b.js"><link rel="prefetch" href="/assets/js/91.e9e4ed17.js"><link rel="prefetch" href="/assets/js/92.01745571.js"><link rel="prefetch" href="/assets/js/93.189ab23d.js"><link rel="prefetch" href="/assets/js/94.2a49cad2.js"><link rel="prefetch" href="/assets/js/95.8c004376.js"><link rel="prefetch" href="/assets/js/96.a5489597.js"><link rel="prefetch" href="/assets/js/97.90844480.js"><link rel="prefetch" href="/assets/js/98.d3a90abe.js"><link rel="prefetch" href="/assets/js/99.9286b79b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.360a9128.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">六松岛-福小林</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/study-guide/introduction.html" class="nav-link">
+  学习指南
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术分类" class="dropdown-title"><span class="title">技术分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/introduction.html" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/go/introduction.html" class="nav-link">
+  Go
+</a></li><li class="dropdown-item"><!----> <a href="/sql/introduction.html" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/fhir/introduction.html" class="nav-link">
+  FHIR
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/introduction.html" class="nav-link">
+  个人博客
+</a></div><div class="nav-item"><a href="/tool/developmentBox.html" class="nav-link">
+  开发百宝箱
+</a></div><div class="nav-item"><a href="/project/introduction.html" class="nav-link">
+  项目分享
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="了解更多" class="dropdown-title"><span class="title">了解更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=180331730&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  其他合作
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.lsdcloud.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/qq_37493556" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="/linkExchanges/introduction.html" class="nav-link">
+  友情链接
+</a></div> <a href="https://github.com/sczj/goblog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/study-guide/introduction.html" class="nav-link">
+  学习指南
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术分类" class="dropdown-title"><span class="title">技术分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/introduction.html" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/go/introduction.html" class="nav-link">
+  Go
+</a></li><li class="dropdown-item"><!----> <a href="/sql/introduction.html" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/fhir/introduction.html" class="nav-link">
+  FHIR
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/introduction.html" class="nav-link">
+  个人博客
+</a></div><div class="nav-item"><a href="/tool/developmentBox.html" class="nav-link">
+  开发百宝箱
+</a></div><div class="nav-item"><a href="/project/introduction.html" class="nav-link">
+  项目分享
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="了解更多" class="dropdown-title"><span class="title">了解更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=180331730&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  其他合作
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.lsdcloud.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/qq_37493556" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="/linkExchanges/introduction.html" class="nav-link">
+  友情链接
+</a></div> <a href="https://github.com/sczj/goblog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/fhir/introduction.html" class="sidebar-link">什么是FHIR</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>FHIR标准</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/fhir/learn-fhir/11 FHIR入门.html" class="active sidebar-link">FHIR如何入门</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/fhir/learn-fhir/11 FHIR入门.html#fhir概述" class="sidebar-link">FHIR概述</a></li><li class="sidebar-sub-header"><a href="/fhir/learn-fhir/11 FHIR入门.html#背景" class="sidebar-link">背景</a></li><li class="sidebar-sub-header"><a href="/fhir/learn-fhir/11 FHIR入门.html#组件" class="sidebar-link">组件</a></li><li class="sidebar-sub-header"><a href="/fhir/learn-fhir/11 FHIR入门.html#方法论" class="sidebar-link">方法论</a></li><li class="sidebar-sub-header"><a href="/fhir/learn-fhir/11 FHIR入门.html#标准规范" class="sidebar-link">标准规范</a></li><li class="sidebar-sub-header"><a href="/fhir/learn-fhir/11 FHIR入门.html#如何入门" class="sidebar-link">如何入门</a></li></ul></li><li><a href="/fhir/learn-fhir/12 开发人员接口说明.html" class="sidebar-link">开发人员接口说明</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="fhir如何入门"><a href="#fhir如何入门" class="header-anchor">#</a> FHIR如何入门</h1> <h2 id="fhir概述"><a href="#fhir概述" class="header-anchor">#</a> FHIR概述</h2> <div class="custom-block tip"><p class="custom-block-title">概述</p> <p>欢迎使用 FHIR 标准，它是卫生保健信息电子化交换的一种标准。这部分是对标准
+的概述，作为一个路线图，希望能帮助初次接触的读者更快上手。</p></div> <h2 id="背景"><a href="#背景" class="header-anchor">#</a> 背景</h2> <div class="custom-block tip"><p class="custom-block-title">背景</p> <ul><li><blockquote><p>1、 医疗保健记录越来越多的被数字化。当病人在整个医疗系统中转诊的时候，要求他
+们的病历能够获得、能够找到和能够理解。更深层次的，
+能够支撑自动化地临床决策支持和其他机器处理，要求数据是结构化的 并且是标
+准化的。</p></blockquote></li> <li><blockquote><p>2、HL7在过去20多年里，一直致力于构建卫生保健数据交换和信息模型标准来解决这
+些难题。FHIR是一种新标准，采用了其他行业的通用技术，
+同时借鉴了在定义和实现 HL7V2，V3,RIM 和 CDA 标准过程中所获得成功、失败
+的教训。FHIR可以单独作为数据交换标准来使用，也可以和其他广泛应用的标准一
+起来使用。</p></blockquote></li> <li><blockquote><p>3、FHIR旨在不牺牲信息完整性的前提下，简化开发和实现。它利用了现有的逻辑和理
+论模型，为不同的应用程序间交换数据提供了一种一致的、易于实现的、健壮的机
+制。FHIR的内在机制使得其能够追溯到 HL7 RIM 和其他内容模型，这就保证了与
+HL7之前定义的模式，最佳实践间的保持一致，毋须开发人员充分了解 RIM 和
+HL7 V3 的其他衍生制品。</p></blockquote></li></ul></div> <h2 id="组件"><a href="#组件" class="header-anchor">#</a> 组件</h2> <p>FHIR 中最基本的组件叫做资源.所有可交换的内容都被定义成一个个资源。所有资源都拥有如下特征：</p> <ul><li>通用的定义、表达它们以及从数据类型(最基本的可重用元素)构建它们的方式</li> <li>通用的元数据集合</li> <li>供人可读的部分</li></ul> <h2 id="方法论"><a href="#方法论" class="header-anchor">#</a> 方法论</h2> <div class="custom-block tip"><p class="custom-block-title">方法论</p> <blockquote><p>FHIR 的理念在于定义一个资源的基础集合，要么直接使用它们，要么相互组合来
+满足大多数常见的应用场景的需求。
+FHIR资源旨在定义绝大多数开发实现中通用的核心信息集合的信息内容和结构。如
+果需要的话，有内在的扩展机制来满足剩下的需求。</p></blockquote> <blockquote><p>FHIR 的建模采用了一种组合式的方法论。相比而言，HL7 V3 建模是基于“model
+by constranit”(参考FHIR与其他HL7标准的比较) 。对于 FHIR，特殊的应用场景通
+常是通过利用资源引用整合资源来实现的。尽管对于一个特定场景，单独一个资源
+可能是存在价值的，更多的是对资源互相整合和裁剪来满足特定的需求。用来描述资源如何整合使用的两类特殊资源：</p></blockquote> <ul><li>一致性声明——描述一种实现中所暴露的交换数据的接口</li> <li>StructureDefinition——描述具体实现中所使用的资源中定义的用以约束基
+数、可选性、术语、数据类型和扩展的其他规则。</li></ul></div> <h2 id="标准规范"><a href="#标准规范" class="header-anchor">#</a> 标准规范</h2> <h4 id="基本上，fhir标准分为三大块："><a href="#基本上，fhir标准分为三大块：" class="header-anchor">#</a> 基本上，FHIR标准分为三大块：</h4> <ul><li>基础文档部分——描述了资源是如何定义的，数据类型、代码编码的定义和XML 、JSON格式的相关背景信息。</li> <li>开发实现部分——描述在REST 、消息、文档和SOA中使用资源。</li> <li>资源列表——resourcelist.htmlFHIR中定义的所有资源的列表。其中又分为临床类、 行政管理类 和基础架构类三大类。</li></ul> <p>资源有多种用途，从最基本的护理计划和诊断报告等临床内容到如消息头、一致性
+声明等基础架构。虽然它们具有共同的技术特性，但却以完全不同的方式来使用。
+注意毋须为了使用资源而必须使用REST。</p> <h2 id="如何入门"><a href="#如何入门" class="header-anchor">#</a> 如何入门</h2> <p>最好是快速浏览一下资源列表，对已经有了哪些资源有个感性认识，然后看一下患者的定义来看看资源的定义是什么样的，</p> <ul><li>资源的定义——资源是如何定义的</li> <li>所有资源都有的叙述性文本，以及资源之间如何互相引用</li> <li>格式：XML 、JSON</li> <li>扩展相关——标准能够保持简单的关键</li> <li>如果你之前了解 HL7 标准(V2 V3 CDA)的话，FHIR 与其他 HL7 标准的比较也值得一看。</li></ul></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2020-2-20 22:34:35</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/fhir/introduction.html" class="prev">
+        什么是FHIR
+      </a></span> <span class="next"><a href="/fhir/learn-fhir/12 开发人员接口说明.html">
+        开发人员接口说明
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.30b04212.js" defer></script><script src="/assets/js/2.73c04003.js" defer></script><script src="/assets/js/61.91ab9048.js" defer></script>
+  </body>
+</html>

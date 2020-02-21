@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CentOS安装redis | 六松岛-福小林</title>
+    <meta name="description" content="千里之行,始于足下">
+    <meta name="generator" content="VuePress 1.3.1">
+    <link rel="icon" href="/img/favicon.ico">
+  <script charset="utf-8" src="/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+  <meta name="keywords" content="福小林,奔奔,ourLang,CentOS,JAVA,vue组件,lsdCloud">
+  <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-146891701-1"></script>
+  <script>window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-146891701-1');</script>
+  <script>var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?56eae8eec590ccaef1d5ff99d766f315";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
+    
+    <link rel="preload" href="/assets/css/0.styles.360a9128.css" as="style"><link rel="preload" href="/assets/js/app.30b04212.js" as="script"><link rel="preload" href="/assets/js/2.73c04003.js" as="script"><link rel="preload" href="/assets/js/27.96ab8d3a.js" as="script"><link rel="prefetch" href="/assets/js/10.0dfb4509.js"><link rel="prefetch" href="/assets/js/100.7179544d.js"><link rel="prefetch" href="/assets/js/101.484a289f.js"><link rel="prefetch" href="/assets/js/102.b9bdf6b9.js"><link rel="prefetch" href="/assets/js/103.982418d8.js"><link rel="prefetch" href="/assets/js/104.ae28deb8.js"><link rel="prefetch" href="/assets/js/105.1c8bf05a.js"><link rel="prefetch" href="/assets/js/106.08ce02d5.js"><link rel="prefetch" href="/assets/js/107.9814e03b.js"><link rel="prefetch" href="/assets/js/108.3ca04917.js"><link rel="prefetch" href="/assets/js/109.0fcf0488.js"><link rel="prefetch" href="/assets/js/11.2f72992a.js"><link rel="prefetch" href="/assets/js/110.2bb5d3e8.js"><link rel="prefetch" href="/assets/js/111.9ceb925b.js"><link rel="prefetch" href="/assets/js/112.ba3e6ce4.js"><link rel="prefetch" href="/assets/js/113.ace0f2e7.js"><link rel="prefetch" href="/assets/js/114.456ccd74.js"><link rel="prefetch" href="/assets/js/115.e1bff5b3.js"><link rel="prefetch" href="/assets/js/116.11b7ae26.js"><link rel="prefetch" href="/assets/js/117.4dd94f49.js"><link rel="prefetch" href="/assets/js/118.8b9ae7e3.js"><link rel="prefetch" href="/assets/js/119.21f0196b.js"><link rel="prefetch" href="/assets/js/12.925da151.js"><link rel="prefetch" href="/assets/js/120.0471dc55.js"><link rel="prefetch" href="/assets/js/121.9ed449e1.js"><link rel="prefetch" href="/assets/js/122.94111fe7.js"><link rel="prefetch" href="/assets/js/13.e8f105ea.js"><link rel="prefetch" href="/assets/js/14.a0212ea5.js"><link rel="prefetch" href="/assets/js/15.82a55e1a.js"><link rel="prefetch" href="/assets/js/16.91f3ace7.js"><link rel="prefetch" href="/assets/js/17.d0bbf17a.js"><link rel="prefetch" href="/assets/js/18.014612b1.js"><link rel="prefetch" href="/assets/js/19.e7bc7b37.js"><link rel="prefetch" href="/assets/js/20.0fb97316.js"><link rel="prefetch" href="/assets/js/21.bb632c3b.js"><link rel="prefetch" href="/assets/js/22.13a69f68.js"><link rel="prefetch" href="/assets/js/23.f77a5633.js"><link rel="prefetch" href="/assets/js/24.d776c9e7.js"><link rel="prefetch" href="/assets/js/25.2f331b69.js"><link rel="prefetch" href="/assets/js/26.b145c5e7.js"><link rel="prefetch" href="/assets/js/28.3b3abdb7.js"><link rel="prefetch" href="/assets/js/29.0fa596f8.js"><link rel="prefetch" href="/assets/js/3.83321553.js"><link rel="prefetch" href="/assets/js/30.4a7395cc.js"><link rel="prefetch" href="/assets/js/31.f19377c3.js"><link rel="prefetch" href="/assets/js/32.b2ea1cff.js"><link rel="prefetch" href="/assets/js/33.a7bc1353.js"><link rel="prefetch" href="/assets/js/34.9f4f5514.js"><link rel="prefetch" href="/assets/js/35.b2720dee.js"><link rel="prefetch" href="/assets/js/36.e14d46e4.js"><link rel="prefetch" href="/assets/js/37.3666a3e2.js"><link rel="prefetch" href="/assets/js/38.75e07b8a.js"><link rel="prefetch" href="/assets/js/39.aa2ae7fe.js"><link rel="prefetch" href="/assets/js/4.5597ce85.js"><link rel="prefetch" href="/assets/js/40.97f6459a.js"><link rel="prefetch" href="/assets/js/41.445e3e26.js"><link rel="prefetch" href="/assets/js/42.ffc9e50a.js"><link rel="prefetch" href="/assets/js/43.ace41f42.js"><link rel="prefetch" href="/assets/js/44.62ba4555.js"><link rel="prefetch" href="/assets/js/45.08f900aa.js"><link rel="prefetch" href="/assets/js/46.47259265.js"><link rel="prefetch" href="/assets/js/47.547e0f92.js"><link rel="prefetch" href="/assets/js/48.21f6693f.js"><link rel="prefetch" href="/assets/js/49.db881f96.js"><link rel="prefetch" href="/assets/js/5.32657e0f.js"><link rel="prefetch" href="/assets/js/50.93cd82ae.js"><link rel="prefetch" href="/assets/js/51.01c10013.js"><link rel="prefetch" href="/assets/js/52.91004033.js"><link rel="prefetch" href="/assets/js/53.7dffaac8.js"><link rel="prefetch" href="/assets/js/54.5d906e8e.js"><link rel="prefetch" href="/assets/js/55.f3329c5d.js"><link rel="prefetch" href="/assets/js/56.3dcaea6d.js"><link rel="prefetch" href="/assets/js/57.208ce894.js"><link rel="prefetch" href="/assets/js/58.7808b00a.js"><link rel="prefetch" href="/assets/js/59.dac99d0e.js"><link rel="prefetch" href="/assets/js/6.0bb4d748.js"><link rel="prefetch" href="/assets/js/60.5d045646.js"><link rel="prefetch" href="/assets/js/61.91ab9048.js"><link rel="prefetch" href="/assets/js/62.3b3ff673.js"><link rel="prefetch" href="/assets/js/63.e5a9ee6b.js"><link rel="prefetch" href="/assets/js/64.f27372fc.js"><link rel="prefetch" href="/assets/js/65.2bb59a36.js"><link rel="prefetch" href="/assets/js/66.a2263c6e.js"><link rel="prefetch" href="/assets/js/67.d22f8dbe.js"><link rel="prefetch" href="/assets/js/68.f6520f7c.js"><link rel="prefetch" href="/assets/js/69.42dad5a3.js"><link rel="prefetch" href="/assets/js/7.758d484d.js"><link rel="prefetch" href="/assets/js/70.5b62a0e5.js"><link rel="prefetch" href="/assets/js/71.ca15fdc7.js"><link rel="prefetch" href="/assets/js/72.6e8d4da1.js"><link rel="prefetch" href="/assets/js/73.f547befa.js"><link rel="prefetch" href="/assets/js/74.cf5fc42b.js"><link rel="prefetch" href="/assets/js/75.23ea867d.js"><link rel="prefetch" href="/assets/js/76.2b92575b.js"><link rel="prefetch" href="/assets/js/77.a327d476.js"><link rel="prefetch" href="/assets/js/78.feeef9ff.js"><link rel="prefetch" href="/assets/js/79.7a8c61ed.js"><link rel="prefetch" href="/assets/js/8.4bdd1bf6.js"><link rel="prefetch" href="/assets/js/80.7923be5e.js"><link rel="prefetch" href="/assets/js/81.201b67ef.js"><link rel="prefetch" href="/assets/js/82.00c5f674.js"><link rel="prefetch" href="/assets/js/83.56277cf4.js"><link rel="prefetch" href="/assets/js/84.d615ad8d.js"><link rel="prefetch" href="/assets/js/85.27a76c36.js"><link rel="prefetch" href="/assets/js/86.ec8d7ac8.js"><link rel="prefetch" href="/assets/js/87.ce1914d9.js"><link rel="prefetch" href="/assets/js/88.e20288e6.js"><link rel="prefetch" href="/assets/js/89.68963d20.js"><link rel="prefetch" href="/assets/js/9.64b1f220.js"><link rel="prefetch" href="/assets/js/90.da446e2b.js"><link rel="prefetch" href="/assets/js/91.e9e4ed17.js"><link rel="prefetch" href="/assets/js/92.01745571.js"><link rel="prefetch" href="/assets/js/93.189ab23d.js"><link rel="prefetch" href="/assets/js/94.2a49cad2.js"><link rel="prefetch" href="/assets/js/95.8c004376.js"><link rel="prefetch" href="/assets/js/96.a5489597.js"><link rel="prefetch" href="/assets/js/97.90844480.js"><link rel="prefetch" href="/assets/js/98.d3a90abe.js"><link rel="prefetch" href="/assets/js/99.9286b79b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.360a9128.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">六松岛-福小林</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/study-guide/introduction.html" class="nav-link">
+  学习指南
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术分类" class="dropdown-title"><span class="title">技术分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/introduction.html" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/go/introduction.html" class="nav-link">
+  Go
+</a></li><li class="dropdown-item"><!----> <a href="/sql/introduction.html" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/fhir/introduction.html" class="nav-link">
+  FHIR
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/introduction.html" class="nav-link">
+  个人博客
+</a></div><div class="nav-item"><a href="/tool/developmentBox.html" class="nav-link">
+  开发百宝箱
+</a></div><div class="nav-item"><a href="/project/introduction.html" class="nav-link">
+  项目分享
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="了解更多" class="dropdown-title"><span class="title">了解更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=180331730&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  其他合作
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.lsdcloud.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/qq_37493556" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="/linkExchanges/introduction.html" class="nav-link">
+  友情链接
+</a></div> <a href="https://github.com/sczj/goblog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/study-guide/introduction.html" class="nav-link">
+  学习指南
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术分类" class="dropdown-title"><span class="title">技术分类</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/introduction.html" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/go/introduction.html" class="nav-link">
+  Go
+</a></li><li class="dropdown-item"><!----> <a href="/sql/introduction.html" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/fhir/introduction.html" class="nav-link">
+  FHIR
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/introduction.html" class="nav-link">
+  个人博客
+</a></div><div class="nav-item"><a href="/tool/developmentBox.html" class="nav-link">
+  开发百宝箱
+</a></div><div class="nav-item"><a href="/project/introduction.html" class="nav-link">
+  项目分享
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="了解更多" class="dropdown-title"><span class="title">了解更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=180331730&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  其他合作
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://www.lsdcloud.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人网站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ourlang" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/qq_37493556" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="/linkExchanges/introduction.html" class="nav-link">
+  友情链接
+</a></div> <a href="https://github.com/sczj/goblog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/blog/introduction.html" class="sidebar-link">博主介绍</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Go</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Java</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>CentOS</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/CentOS/centos7 安装Kibana-6.4.3.html" class="sidebar-link">CentOS安装Kibana</a></li><li><a href="/blog/CentOS/CentOS7安装Elasticsearch 6.4.3.html" class="sidebar-link">CentOS安装ElasticSearch</a></li><li><a href="/blog/CentOS/centos7安装LogStash.html" class="sidebar-link">CentOS7安装LogStash</a></li><li><a href="/blog/CentOS/CentOS7安装nginx.html" class="sidebar-link">CentOS7安装Nginx</a></li><li><a href="/blog/CentOS/Centos7解压Zip文件.html" class="sidebar-link">CentOS 解压Zip文件</a></li><li><a href="/blog/CentOS/CentOS上通过ll或者du命令查看文件的大小.html" class="sidebar-link">CentOS通过ll或者du查看文件大小</a></li><li><a href="/blog/CentOS/centos关闭防火墙.html" class="sidebar-link">CentOS关闭防火墙</a></li><li><a href="/blog/CentOS/Centos安装lrzsz上传下载软件rz,sz命令用法详解.html" class="sidebar-link">CentOS安装文件上传下载插件</a></li><li><a href="/blog/CentOS/CentOS安装MySQL.html" class="sidebar-link">CentOS安装mysql</a></li><li><a href="/blog/CentOS/Centos安装Redis.html" class="active sidebar-link">CentOS安装redis</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/CentOS/Centos安装Redis.html#一、下载redis安装文件" class="sidebar-link">一、下载Redis安装文件</a></li><li class="sidebar-sub-header"><a href="/blog/CentOS/Centos安装Redis.html#二、解压redis并安装文件并安装" class="sidebar-link">二、解压redis并安装文件并安装</a></li><li class="sidebar-sub-header"><a href="/blog/CentOS/Centos安装Redis.html#三-、启动redis服务" class="sidebar-link">三 、启动redis服务</a></li><li class="sidebar-sub-header"><a href="/blog/CentOS/Centos安装Redis.html#四-、redis-conf配置文件参数说明" class="sidebar-link">四 、redis.conf配置文件参数说明</a></li></ul></li><li><a href="/blog/CentOS/centos安装rocketmq.html" class="sidebar-link">CentOS安装rocketmq</a></li><li><a href="/blog/CentOS/centos彻底删除文件夹、文件命令.html" class="sidebar-link">CentOS彻底删除文件夹、文件命令</a></li><li><a href="/blog/CentOS/一个故事告诉你什么是消息队列.html" class="sidebar-link">什么是消息队列</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>数据库</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>正则表达式</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>版本控制器</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ElasticSearch</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Spring Cloud Alibaba</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="centos安装redis"><a href="#centos安装redis" class="header-anchor">#</a> CentOS安装redis</h1> <h2 id="一、下载redis安装文件"><a href="#一、下载redis安装文件" class="header-anchor">#</a> 一、下载Redis安装文件</h2> <h4 id="下载之前，建议新建一个文件夹来存放安装包。"><a href="#下载之前，建议新建一个文件夹来存放安装包。" class="header-anchor">#</a> 下载之前，建议新建一个文件夹来存放安装包。</h4> <p><img src="https://img-blog.csdnimg.cn/20191105225234159.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+输入下面命令下载安装包</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>wget http://download.redis.io/releases/redis-4.0.2.tar.gz
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="二、解压redis并安装文件并安装"><a href="#二、解压redis并安装文件并安装" class="header-anchor">#</a> 二、解压redis并安装文件并安装</h2> <h4 id="_2-1-解压文件"><a href="#_2-1-解压文件" class="header-anchor">#</a> 2.1 解压文件</h4> <p><img src="https://img-blog.csdnimg.cn/2019110522561020.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>tar -zxvf redis-4.0.2.tar.gz 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_2-2-进入解压目录"><a href="#_2-2-进入解压目录" class="header-anchor">#</a> 2.2 进入解压目录</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>cd redis-4.0.2      
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>####2.3 编译及安装
+<img src="https://img-blog.csdnimg.cn/20191105230050160.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>make
+make install  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="三-、启动redis服务"><a href="#三-、启动redis服务" class="header-anchor">#</a> 三 、启动redis服务</h2> <h4 id="_3-1-安装完成后可在-usr-local-bin-找到刚刚安装的文件。"><a href="#_3-1-安装完成后可在-usr-local-bin-找到刚刚安装的文件。" class="header-anchor">#</a> 3.1 安装完成后可在  /usr/local/bin 找到刚刚安装的文件。</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>cd /usr/local/bin
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="https://img-blog.csdnimg.cn/20191105230232320.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <h4 id="_3-2-启动redis"><a href="#_3-2-启动redis" class="header-anchor">#</a> 3.2 启动redis</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>redis-server
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="https://img-blog.csdnimg.cn/20191105230442598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <h4 id="_3-3-修改redis的配置文件"><a href="#_3-3-修改redis的配置文件" class="header-anchor">#</a> 3.3 修改redis的配置文件</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>vim redis.conf
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="https://img-blog.csdnimg.cn/20191105232117638.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <h4 id="_3-4-比如修改redis以后台进程方式启动"><a href="#_3-4-比如修改redis以后台进程方式启动" class="header-anchor">#</a> 3.4 比如修改redis以后台进程方式启动</h4> <h5 id="按下-键，这时在状态栏（也就是屏幕左下脚）就出现了-然后输入你要查找的关键字daemonize-敲回车就可以了。"><a href="#按下-键，这时在状态栏（也就是屏幕左下脚）就出现了-然后输入你要查找的关键字daemonize-敲回车就可以了。" class="header-anchor">#</a> 按下”/“键，这时在状态栏（也就是屏幕左下脚）就出现了 “/” 然后输入你要查找的关键字daemonize 敲回车就可以了。</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>把daemonize no 替换成  daemonize yes  然后按esc 输入:wq 保存并退出
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p><img src="https://img-blog.csdnimg.cn/20191105232636194.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <h4 id="进入redis的src目录输入下面命令后台启动"><a href="#进入redis的src目录输入下面命令后台启动" class="header-anchor">#</a> 进入redis的src目录输入下面命令后台启动</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>./redis-server &amp;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="_3-5-用redis可视化工具连接报错"><a href="#_3-5-用redis可视化工具连接报错" class="header-anchor">#</a> 3.5 用redis可视化工具连接报错</h4> <p><img src="https://img-blog.csdnimg.cn/20191105232914856.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <h4 id="注释掉-redis-conf-下的-bind-127-0-0-1如图"><a href="#注释掉-redis-conf-下的-bind-127-0-0-1如图" class="header-anchor">#</a> 注释掉 redis.conf 下的 bind 127.0.0.1如图</h4> <h4 id="然后按esc-输入-wq-保存并退出"><a href="#然后按esc-输入-wq-保存并退出" class="header-anchor">#</a> 然后按esc 输入:wq 保存并退出</h4> <p><img src="https://img-blog.csdnimg.cn/20191105233041639.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NDkzNTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p> <h2 id="四-、redis-conf配置文件参数说明"><a href="#四-、redis-conf配置文件参数说明" class="header-anchor">#</a> 四 、redis.conf配置文件参数说明</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>daemonize：如需要在后台运行，把该项的值改为yes
+ 
+pdifile：把pid文件放在/var/run/redis.pid，可以配置到其他地址
+ 
+bind：指定redis只接收来自该IP的请求，如果不设置，那么将处理所有请求，在生产环节中最好设置该项
+ 
+port：监听端口，默认为6379
+ 
+timeout：设置客户端连接时的超时时间，单位为秒
+ 
+loglevel：等级分为4级，debug，revbose，notice和warning。生产环境下一般开启notice
+ 
+logfile：配置log文件地址，默认使用标准输出，即打印在命令行终端的端口上
+ 
+database：设置数据库的个数，默认使用的数据库是0
+ 
+save：设置redis进行数据库镜像的频率
+ 
+rdbcompression：在进行镜像备份时，是否进行压缩
+ 
+dbfilename：镜像备份文件的文件名
+ 
+dir：数据库镜像备份的文件放置的路径
+ 
+slaveof：设置该数据库为其他数据库的从数据库
+ 
+masterauth：当主数据库连接需要密码验证时，在这里设定
+ 
+requirepass：设置客户端连接后进行任何其他指定前需要使用的密码
+ 
+maxclients：限制同时连接的客户端数量
+ 
+maxmemory：设置redis能够使用的最大内存
+ 
+appendonly：开启appendonly模式后，redis会把每一次所接收到的写操作都追加到appendonly.aof文件中，当redis重新启动时，会从该文件恢复出之前的状态
+ 
+appendfsync：设置appendonly.aof文件进行同步的频率
+ 
+vm_enabled：是否开启虚拟内存支持
+ 
+vm_swap_file：设置虚拟内存的交换文件的路径
+ 
+vm_max_momery：设置开启虚拟内存后，redis将使用的最大物理内存的大小，默认为0
+ 
+vm_page_size：设置虚拟内存页的大小
+ 
+vm_pages：设置交换文件的总的page数量
+ 
+vm_max_thrrads：设置vm IO同时使用的线程数量</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br></div></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2020-2-20 22:34:35</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog/CentOS/CentOS安装MySQL.html" class="prev">
+        CentOS安装mysql
+      </a></span> <span class="next"><a href="/blog/CentOS/centos安装rocketmq.html">
+        CentOS安装rocketmq
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.30b04212.js" defer></script><script src="/assets/js/2.73c04003.js" defer></script><script src="/assets/js/27.96ab8d3a.js" defer></script>
+  </body>
+</html>
